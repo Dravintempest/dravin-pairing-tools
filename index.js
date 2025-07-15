@@ -27,11 +27,11 @@ const showBanner = async () => {
     console.clear();
     const banner = figlet.textSync("DRAVIN", { font: "ANSI Shadow" });
     console.log(gradient.instagram.multiline(banner));
-    await typeEffect(chalk.magentaBright("[⚙️] WhatsApp Pairing Spam Tools v2 - DRAVIN Edition"));
-    await typeEffect(chalk.cyan("═════════════════════════════════════════════════════"));
-    await typeEffect(chalk.green("• Gunakan hanya untuk edukasi, tanggung sendiri risikonya"));
-    await typeEffect(chalk.yellow("• Target hanya berlaku untuk nomor dengan kode negara 62"));
-    await typeEffect(chalk.cyan("═════════════════════════════════════════════════════\n"));
+    await typeEffect(chalk.magenta.bold("[⚙️] WhatsApp Pairing Spam Tools v2 - DRAVIN Edition"));
+    await typeEffect(chalk.cyan.bold("═════════════════════════════════════════════════════"));
+    await typeEffect(chalk.green.bold("• Gunakan hanya untuk edukasi, tanggung sendiri risikonya"));
+    await typeEffect(chalk.yellow.bold("• Target hanya berlaku untuk nomor dengan kode negara 62"));
+    await typeEffect(chalk.cyan.bold("═════════════════════════════════════════════════════\n"));
 };
 
 async function initConnection() {
@@ -52,19 +52,19 @@ async function startSpam() {
     while (true) {
         console.log(chalk.cyan.bold("\n💡 Masukkan nomor target dan jumlah spam"));
 
-        const nomor = await question(chalk.yellow("📱 Nomor Target (62xxxxx): "));
+        const nomor = await question(chalk.yellow.bold("📱 Nomor Target (62xxxxx): "));
         if (!nomor.startsWith("62")) {
-            console.log(chalk.redBright("❌ Nomor harus dimulai dengan 62"));
+            console.log(chalk.red.bold("❌ Nomor harus dimulai dengan 62"));
             continue;
         }
 
-        const jumlah = parseInt(await question(chalk.yellow("🔁 Jumlah Spam (1-50): ")));
+        const jumlah = parseInt(await question(chalk.yellow.bold("🔁 Jumlah Spam (1-50): ")));
         if (isNaN(jumlah) || jumlah < 1 || jumlah > 50) {
-            console.log(chalk.redBright("❌ Jumlah harus antara 1 dan 50"));
+            console.log(chalk.red.bold("❌ Jumlah harus antara 1 dan 50"));
             continue;
         }
 
-        console.log(chalk.greenBright(`\n🚀 Memulai spam pairing ke ${nomor} sebanyak ${jumlah}x...\n`));
+        console.log(chalk.green.bold(`\n🚀 Memulai spam pairing ke ${nomor} sebanyak ${jumlah}x...\n`));
         let sukses = 0;
 
         for (let i = 0; i < jumlah; i++) {
@@ -74,11 +74,11 @@ async function startSpam() {
                 kode = kode.match(/.{1,4}/g).join('-');
                 const waktu = ((Date.now() - start) / 1000).toFixed(2);
 
-                console.log(chalk.green(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`));
+                console.log(chalk.green.bold(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`));
                 sukses++;
                 await sleep(1000);
             } catch (err) {
-                console.log(chalk.red(`[X] ${i + 1}/${jumlah} => Gagal: ${err.message}`));
+                console.log(chalk.red.bold(`[X] ${i + 1}/${jumlah} => Gagal: ${err.message}`));
                 await sleep(2000);
             }
         }
@@ -86,10 +86,10 @@ async function startSpam() {
         console.log(chalk.cyan.bold("\n📊 Ringkasan"));
         console.log(chalk.cyan(`├─ Nomor   : ${chalk.white(nomor)}`));
         console.log(chalk.cyan(`├─ Total   : ${chalk.white(jumlah)}`));
-        console.log(chalk.cyan(`├─ Sukses  : ${chalk.greenBright(sukses)}`));
-        console.log(chalk.cyan(`└─ Gagal   : ${chalk.redBright(jumlah - sukses)}`));
+        console.log(chalk.cyan(`├─ Sukses  : ${chalk.green(sukses)}`));
+        console.log(chalk.cyan(`└─ Gagal   : ${chalk.red(jumlah - sukses)}`));
 
-        const ulang = await question(chalk.magenta("\n🔁 Ingin spam lagi? (y/n): "));
+        const ulang = await question(chalk.magenta.bold("\n🔁 Ingin spam lagi? (y/n): "));
         if (ulang.toLowerCase() !== "y") break;
     }
 
@@ -101,7 +101,7 @@ async function startSpam() {
 (async () => {
     await showBanner();
     await sleep(1000);
-    await typeEffect(chalk.yellow("[⌛] Menyiapkan koneksi..."));
+    await typeEffect(chalk.yellow.bold("[⌛] Menyiapkan koneksi..."));
     await sleep(1500);
     await startSpam();
 })();
