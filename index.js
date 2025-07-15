@@ -71,7 +71,10 @@ async function startSpam() {
             continue;
         }
 
-        const jumlah = parseInt(await question(chalk.yellow("🔁 Jumlah Spam (1-30): ")));
+        const jumlah = parseInt(await question(
+    chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
+    chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
+    chalk.yellow("Jumlah Spam (1-30): ")));
         if (isNaN(jumlah) || jumlah < 1 || jumlah > 30) {
             console.log(chalk.red("❌ Jumlah harus antara 1 dan 30"));
             continue;
