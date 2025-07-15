@@ -5,8 +5,10 @@ const chalk = require("chalk").default;
 const readline = require("readline");
 const pino = require("pino");
 
-const sleep = (ms, variation = 0) => new Promise(resolve => 
+// Fixed sleep function with proper parentheses
+const sleep = (ms, variation = 0) => new Promise(resolve => {
     setTimeout(resolve, ms + (variation ? Math.floor(Math.random() * variation) : 0));
+});
 
 const question = (text) => {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
