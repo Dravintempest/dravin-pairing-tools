@@ -61,7 +61,11 @@ async function startSpam() {
     while (true) {
         console.log(chalk.cyan("\n💡 Masukkan nomor target dan jumlah spam"));
 
-        const nomor = await question(chalk.yellow("📱 Nomor Target (62xxxxxxxxxx): "));
+        const nomor = await question(
+    chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
+    chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
+    chalk.yellow('Nomor Target (62xxxxxxxxxx): ')
+);
         if (!/^62\d{9,13}$/.test(nomor)) {
             console.log(chalk.red("❌ Format nomor tidak valid. Contoh: 6281234567890"));
             continue;
