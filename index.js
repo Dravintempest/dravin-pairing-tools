@@ -1,11 +1,12 @@
 const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys");
 const figlet = require("figlet");
 const gradient = require("gradient-string");
-const chalk = require("chalk").default; // Important change here
+const chalk = require("chalk").default;
 const readline = require("readline");
 const pino = require("pino");
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms, variation = 0) => new Promise(resolve => 
+    setTimeout(resolve, ms + (variation ? Math.floor(Math.random() * variation) : 0));
 
 const question = (text) => {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -40,9 +41,15 @@ async function initConnection() {
         logger: pino({ level: "silent" }),
         printQRInTerminal: false,
         auth: state,
-        browser: ["DRAVIN TOOLS", "CyberFox", "13.37"],
-        syncFullHistory: false,
-        markOnlineOnConnect: false
+        connectTimeoutMs: 60000,
+        defaultQueryTimeoutMs: 0,
+        keepAliveIntervalMs: 10000,
+        emitOwnEvents: true,
+        fireInitQueries: true,
+        generateHighQualityLinkPreview: true,
+        syncFullHistory: true,
+        markOnlineOnConnect: true,
+        browser: ["Ubuntu", "Chrome", "20.0.04"]
     });
 }
 
@@ -52,15 +59,15 @@ async function startSpam() {
     while (true) {
         console.log(chalk.cyan("\n💡 Masukkan nomor target dan jumlah spam"));
 
-        const nomor = await question(chalk.yellow("📱 Nomor Target (62xxxxx): "));
-        if (!nomor.startsWith("62")) {
-            console.log(chalk.red("❌ Nomor harus dimulai dengan 62"));
+        const nomor = await question(chalk.yellow("📱 Nomor Target (62xxxxxxxxxx): "));
+        if (!/^62\d{9,13}$/.test(nomor)) {
+            console.log(chalk.red("❌ Format nomor tidak valid. Contoh: 6281234567890"));
             continue;
         }
 
-        const jumlah = parseInt(await question(chalk.yellow("🔁 Jumlah Spam (1-50): ")));
-        if (isNaN(jumlah) || jumlah < 1 || jumlah > 50) {
-            console.log(chalk.red("❌ Jumlah harus antara 1 dan 50"));
+        const jumlah = parseInt(await question(chalk.yellow("🔁 Jumlah Spam (1-30): ")));
+        if (isNaN(jumlah) || jumlah < 1 || jumlah > 30) {
+            console.log(chalk.red("❌ Jumlah harus antara 1 dan 30"));
             continue;
         }
 
@@ -76,10 +83,17 @@ async function startSpam() {
 
                 console.log(chalk.green(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`));
                 sukses++;
-                await sleep(1000);
+                
+                // Random delay between 5-10 seconds
+                await sleep(5000, 5000);
             } catch (err) {
                 console.log(chalk.red(`[X] ${i + 1}/${jumlah} => Gagal: ${err.message}`));
-                await sleep(2000);
+                if (err.message.includes("rate limit") || err.message.includes("too many")) {
+                    console.log(chalk.yellow("⚠️ Terlalu banyak permintaan, menunggu 45 detik..."));
+                    await sleep(45000);
+                } else {
+                    await sleep(10000, 5000); // Longer delay on failure
+                }
             }
         }
 
@@ -97,7 +111,6 @@ async function startSpam() {
     process.exit(0);
 }
 
-// Main Execution
 (async () => {
     await showBanner();
     await sleep(1000);
