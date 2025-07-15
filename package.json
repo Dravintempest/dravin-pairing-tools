@@ -1,19 +1,18 @@
 {
-  "name": "dravin-pairing-spam",
-  "version": "1.0.0",
+  "name": "dravin-pairing-tools",
+  "version": "2.0.0",
+  "description": "Tools spam pairing WhatsApp dengan UI cyberpunk ala Dravin",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "Dravin",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "@hapi/boom": "^10.0.1",
-    "@whiskeysockets/baileys": "^6.5.0",
-    "clear-console": "^1.1.0",
-    "pino": "^8.16.2",
-    "qrcode-terminal": "^0.12.0"
-  }
+    "@whiskeysockets/baileys": "^6.7.1",
+    "chalk": "^5.3.0",
+    "figlet": "^1.7.0",
+    "gradient-string": "^2.0.1",
+    "pino": "^8.17.0"
+  },
+  "author": "Dravin",
+  "license": "MIT"
 }
