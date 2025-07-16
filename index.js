@@ -50,14 +50,50 @@ const formatPhoneNumber = (number) => {
 
 const showBanner = async () => {
     console.clear();
-    const banner = figlet.textSync("DRAVIN", { font: "ANSI Shadow" });
-    console.log(gradient.instagram.multiline(banner));
-    await typeEffect(chalk.magenta("╔════════════════════════════════════════════════╗"));
-    await typeEffect(chalk.magenta("║    WhatsApp Pairing Spam Tools - DRAVIN     ║"));
-    await typeEffect(chalk.magenta("╠════════════════════════════════════════════════╣"));
-    await typeEffect(chalk.green("║ • Gunakan hanya untuk edukasi                ║"));
-    await typeEffect(chalk.yellow("║ • Target hanya untuk nomor dengan kode 62   ║"));
-    await typeEffect(chalk.magenta("╚════════════════════════════════════════════════╝\n"));
+    try {
+        // Create banner with better error handling
+        const banner = await new Promise((resolve) => {
+            figlet.text("DRAVIN", {
+                font: "ANSI Shadow",
+                horizontalLayout: 'default',
+                verticalLayout: 'default'
+            }, (err, result) => {
+                if (err) {
+                    // Fallback if fancy font fails
+                    resolve(figlet.textSync("DRAVIN", { font: "Standard" }));
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        // Calculate padding for centering
+        const bannerLines = banner.split('\n');
+        const bannerWidth = bannerLines[0].length;
+        const boxWidth = 50;
+        const padding = Math.max(0, Math.floor((process.stdout.columns - boxWidth) / 2));
+        const pad = ' '.repeat(padding);
+
+        // Display banner with gradient
+        console.log(gradient.instagram(banner));
+
+        // Display box with proper alignment
+        await typeEffect(pad + chalk.magenta("╔════════════════════════════════════════════════╗"));
+        await typeEffect(pad + chalk.magenta("║    WhatsApp Pairing Spam Tools - DRAVIN     ║"));
+        await typeEffect(pad + chalk.magenta("╠════════════════════════════════════════════════╣"));
+        await typeEffect(pad + chalk.green("║ • Gunakan hanya untuk edukasi                ║"));
+        await typeEffect(pad + chalk.yellow("║ • Target hanya untuk nomor dengan kode 62   ║"));
+        await typeEffect(pad + chalk.magenta("╚════════════════════════════════════════════════╝"));
+        console.log(); // Extra newline
+
+    } catch (error) {
+        // Ultimate fallback if everything fails
+        console.log(gradient.instagram("=== DRAVIN WHATSAPP TOOLS ==="));
+        console.log(chalk.magenta("WhatsApp Pairing Spam Tools"));
+        console.log(chalk.green("• Gunakan hanya untuk edukasi"));
+        console.log(chalk.yellow("• Target hanya untuk nomor dengan kode 62"));
+        console.log();
+    }
 };
 
 async function initConnection() {
