@@ -65,7 +65,7 @@ async function startSpam() {
             nomor = await question(
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                chalk.yellow('Nomor Target (62xxxxxxxxxx): ')
+                chalk.yellow('Nomor Target 62xxxxxx: ')
             );
             
             if (!/^62\d{9,13}$/.test(nomor)) {
@@ -77,7 +77,7 @@ async function startSpam() {
             const reuse = await question(
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                chalk.yellow(`Gunakan nomor sebelumnya ${lastNumber}? (y/n): `)
+                chalk.yellow(`Gunakan nomor ${lastNumber}? (y/n): `)
             );
             
             if (reuse.toLowerCase() === 'y') {
@@ -86,7 +86,7 @@ async function startSpam() {
                 nomor = await question(
                     chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                     chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                    chalk.yellow('Nomor Target (62xxxxxxxxxx): ')
+                    chalk.yellow('Nomor Target 62xxxxxx: ')
                 );
                 
                 if (!/^62\d{9,13}$/.test(nomor)) {
@@ -134,7 +134,10 @@ async function startSpam() {
         console.log(chalk.cyan(`├─ Sukses : ${chalk.green(sukses)}`));
         console.log(chalk.cyan(`└─ Gagal : ${chalk.red(jumlah - sukses)}`));
 
-        const ulang = await question(chalk.magenta("\n🔁 Ingin spam lagi? (y/n): "));
+        const ulang = await question(
+                chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
+                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
+                chalk.magenta("\n🔁 Ingin spam lagi? (y/n): "));
         if (ulang.toLowerCase() !== "y") break;
     }
 
