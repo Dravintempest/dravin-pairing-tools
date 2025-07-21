@@ -149,7 +149,10 @@ async function startSpam() {
     process.exit(0);
 }
 
-(async () => {
+// Add at the bottom of dravin-call.js:
+module.exports = {
+  start: async () => {
     await showBanner();
     await startSpam();
-})();
+  }
+};
