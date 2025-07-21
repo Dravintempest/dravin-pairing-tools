@@ -119,14 +119,14 @@ async function startSpam() {
                 const waktu = ((Date.now() - start) / 1000).toFixed(2);
                 console.log(chalk.green(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`));
                 sukses++;
-                await sleep(5000, 5000); // Original delay kept
+                await sleep(1000, 500); // Original delay kept
             } catch (err) {
                 console.log(chalk.red(`[X] ${i + 1}/${jumlah} => Gagal: ${err.message}`));
                 if (err.message.includes("rate limit") || err.message.includes("too many")) {
                     console.log(chalk.yellow("⚠️ Terlalu banyak permintaan, menunggu 45 detik..."));
                     await sleep(45000);
                 } else {
-                    await sleep(10000, 5000); // Original delay kept
+                    await sleep(1000, 500); // Original delay kept
                 }
             }
         }
