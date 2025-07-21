@@ -4,7 +4,9 @@
   "description": "Tools spam pairing WhatsApp dengan UI cyberpunk ala Dravin",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "pairing": "node dravin-pairing.js",
+    "call": "node dravin-call.js"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.1",
