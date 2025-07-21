@@ -8,20 +8,23 @@ const pino = require("pino");
 // Simple reliable sleep function
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Fixed question function using readline properly
+// BUAT INTERFACE SEKALI SAJA DI AWAL
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+// Fixed question function (gunakan rl global)
 const question = (text) => {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-    
     return new Promise(resolve => {
         rl.question(text, (answer) => {
-            rl.close();
             resolve(answer);
         });
     });
 };
+
+// Tutup readline saat proses keluar
+process.on('exit', () => rl.close());
 
 // Special phone number input
 const questionPhoneNumber = async (text) => {
