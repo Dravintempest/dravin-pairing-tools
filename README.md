@@ -44,6 +44,8 @@ npm install
 ```
 npm start
 ```
-
+<details id="missing-code-coverage">
+  <summary>Social Media</summary>
+  
 ##### Social Media
-[Tiktok](https://tiktok.com/@dr4vin)
+[Tik Tok](https://tiktok.com/@dr4vin)
