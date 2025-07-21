@@ -149,10 +149,13 @@ async function startSpam() {
     process.exit(0);
 }
 
-(async () => {
+// Add at the bottom of dravin-pairing.js:
+module.exports = {
+  start: async () => {
     await showBanner();
     await sleep(1000);
     await typeEffect(chalk.yellow("[⌛] Menyiapkan koneksi..."));
     await sleep(1500);
     await startSpam();
-})();
+  }
+};
