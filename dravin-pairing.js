@@ -1,3 +1,10 @@
+const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys");
+const figlet = require("figlet");
+const gradient = require("gradient-string");
+const chalk = require("chalk").default;
+const readline = require("readline");
+const pino = require("pino");
+
 // Simple reliable sleep function
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
