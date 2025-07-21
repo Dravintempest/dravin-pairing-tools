@@ -74,7 +74,7 @@ async function startSpam() {
     while (true) { 
         console.log(chalk.cyan("\n💡 Masukkan nomor target dan jumlah spam"));
         
-        // Get number input with better validation
+        // Get number input with improved validation
         let nomor = '';
         while (true) {
             const input = await question(
@@ -89,7 +89,8 @@ async function startSpam() {
                 nomor = cleaned;
                 break;
             }
-            console.log(chalk.red("❌ Format nomor tidak valid. Contoh: 6281234567890 (tanpa + atau spasi)"));
+            console.log(chalk.red(`❌ Format nomor tidak valid (${cleaned.length} digit): ${cleaned}`));
+            console.log(chalk.red("   Contoh valid: 6281234567890 (tanpa + atau spasi)"));
         }
         lastNumber = nomor;
 
