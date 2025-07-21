@@ -138,7 +138,7 @@ async function startSpam() {
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
                 chalk.magenta("🔁 Ingin spam lagi? (y/n): ")
-            ));
+            );
         if (ulang.toLowerCase() !== "y") break;
     }
 
