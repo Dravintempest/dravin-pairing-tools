@@ -26,10 +26,21 @@
 
 Copy dan paste perintah ini buat install semua yang dibutuhkan:
 
-```bash
+```
 pkg update && pkg upgrade -y
+```
+```
 pkg install nodejs git -y
+```
+```
 git clone https://github.com/Dravintempest/dravin-pairing-tools
+```
+```
 cd dravin-pairing-tools
+```
+```
 npm install
+```
+```
 npm start
+```
