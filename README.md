@@ -47,5 +47,5 @@ npm start
 <details id="missing-code-coverage">
   <summary>Social Media</summary>
   
-##### Social Media
-[Tik Tok](https://tiktok.com/@dr4vin)
+##### Tik Tok
+[@dr4vin](https://tiktok.com/@dr4vin)
