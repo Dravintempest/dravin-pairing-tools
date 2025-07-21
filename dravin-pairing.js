@@ -5,64 +5,25 @@ const chalk = require("chalk").default;
 const readline = require("readline");
 const pino = require("pino");
 
-// Store original terminal settings
-const originalStdinIsRaw = process.stdin.isRaw;
+// Simple reliable sleep function
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Improved sleep function
-const sleep = (ms, variation = 0) => new Promise(resolve => {
-    setTimeout(resolve, ms + (variation ? Math.floor(Math.random() * variation) : 0));
-});
-
-// Fixed question function with proper input handling
+// Fixed question function using readline properly
 const question = (text) => {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    
     return new Promise(resolve => {
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout,
-            terminal: true
+        rl.question(text, (answer) => {
+            rl.close();
+            resolve(answer);
         });
-
-        // Clear line and show prompt
-        process.stdout.write('\x1B[K' + text);
-        
-        let input = '';
-        const onData = (chunk) => {
-            const str = chunk.toString();
-            
-            // Handle backspace
-            if (str === '\b' || str === '\x7f') {
-                if (input.length > 0) {
-                    input = input.slice(0, -1);
-                    process.stdout.write('\b \b');
-                }
-                return;
-            }
-            
-            // Handle enter
-            if (str === '\r' || str === '\n') {
-                process.stdin.off('data', onData);
-                process.stdout.write('\n');
-                rl.close();
-                resolve(input);
-                return;
-            }
-            
-            // Only allow printable characters
-            if (str >= ' ' && str <= '~') {
-                input += str;
-                process.stdout.write(str);
-            }
-        };
-
-        // Set up input handler
-        if (process.stdin.isTTY) {
-            process.stdin.setRawMode(true);
-        }
-        process.stdin.on('data', onData);
     });
 };
 
-// Specialized phone number question function
+// Special phone number input
 const questionPhoneNumber = async (text) => {
     while (true) {
         const input = await question(text);
@@ -75,7 +36,7 @@ const questionPhoneNumber = async (text) => {
     }
 };
 
-// Specialized number range question function
+// Number range input
 const questionNumberRange = async (text, min, max) => {
     while (true) {
         const input = await question(text);
@@ -141,7 +102,6 @@ async function startSpam() {
             chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
             chalk.yellow('Nomor Target (62xxxxxxxxxx): ')
         );
-        lastNumber = nomor;
 
         // Get spam count
         const jumlah = await questionNumberRange(
@@ -162,14 +122,14 @@ async function startSpam() {
                 const waktu = ((Date.now() - start) / 1000).toFixed(2);
                 console.log(chalk.green(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`));
                 sukses++;
-                await sleep(500, 500);
+                await sleep(500 + Math.floor(Math.random() * 500));
             } catch (err) {
                 console.log(chalk.red(`[X] ${i + 1}/${jumlah} => Gagal: ${err.message}`));
                 if (err.message.includes("rate limit") || err.message.includes("too many")) {
                     console.log(chalk.yellow("⚠️ Terlalu banyak permintaan, menunggu 45 detik..."));
                     await sleep(45000);
                 } else {
-                    await sleep(500, 500);
+                    await sleep(500 + Math.floor(Math.random() * 500));
                 }
             }
         }
@@ -188,10 +148,6 @@ async function startSpam() {
         if (ulang.toLowerCase() !== "y") break;
     }
 
-    // Restore terminal settings
-    if (process.stdin.isTTY) {
-        process.stdin.setRawMode(originalStdinIsRaw);
-    }
     console.log(chalk.green("\n✨ Terima kasih telah menggunakan Dravin Tools!"));
     process.exit(0);
 }
@@ -206,10 +162,6 @@ module.exports = {
         await sleep(1500);
         await startSpam();
     } catch (error) {
-        // Ensure terminal settings are restored on error
-        if (process.stdin.isTTY) {
-            process.stdin.setRawMode(originalStdinIsRaw);
-        }
         console.error(chalk.red(`Error: ${error.message}`));
         process.exit(1);
     }
