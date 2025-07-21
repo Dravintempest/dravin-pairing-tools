@@ -1,7 +1,7 @@
-<h1 align="center">🔥 Dravin Pairing Tools 🔥</h1>
+<h1 align="center">Dravin Pairing Tools</h1>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&center=true&vCenter=true&width=435&lines=Spam+Pairing+WhatsApp+by+Dravin;Tools+Cyberpunk+Vibe;Auto+Pairing+Code+Request" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&center=true&vCenter=true&width=435&lines=Spam+Pairing+WhatsApp+by+Dravin;Spam+pairing+tools;jangan+di+salah+gunakan;Auto+Pairing+Code+Request" alt="Typing SVG" />
 </p>
 
 <p align="center">
@@ -44,6 +44,9 @@ npm install
 ```
 npm start
 ```
+
+---
+
 <details id="missing-code-coverage">
   <summary>Social Media</summary>
   
