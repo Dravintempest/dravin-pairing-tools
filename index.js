@@ -4,10 +4,9 @@ const chalk = require('chalk').default;
 const figlet = require('figlet');
 const gradient = require('gradient-string');
 
-// Optimized functions
 const showBanner = () => {
   console.clear();
-  console.log(gradient.instagram(figlet.textSync("DRAVIN", { font: "ANSI Shadow" })))  
+  console.log(gradient.instagram(figlet.textSync("DRAVIN", { font: "ANSI Shadow" })));  
   console.log(gradient.instagram(figlet.textSync("TOOLS", { font: "ANSI Shadow" })));
   console.log(chalk.magenta("[⚡] WhatsApp Spam Tools - Optimized Version"));
   console.log(chalk.cyan("══════════════════════════════════════════"));
@@ -16,7 +15,7 @@ const showBanner = () => {
 const runTool = (script) => {
   return new Promise((resolve) => {
     const child = spawn('node', [script], { stdio: 'inherit' });
-    
+
     child.on('close', (code) => {
       console.log(chalk.yellow(`\nTool ${script} exited with code ${code}`));
       resolve();
@@ -24,10 +23,9 @@ const runTool = (script) => {
   });
 };
 
-// Main menu
 (async () => {
   showBanner();
-  
+
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -43,7 +41,7 @@ const runTool = (script) => {
       rl.question(chalk.yellow("Pilihan (1-3): "), resolve);
     });
 
-    switch (choice) {
+    switch (choice.trim()) {
       case '1':
         await runTool('dravin-pairing.js');
         break;
@@ -54,7 +52,7 @@ const runTool = (script) => {
         rl.close();
         process.exit(0);
       default:
-        console.log(chalk.red("Pilihan tidak valid!"));
+        console.log(chalk.red("❌ Pilihan tidak valid! Coba lagi."));
     }
 
     showBanner();
