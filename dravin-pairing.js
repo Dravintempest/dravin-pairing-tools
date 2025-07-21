@@ -5,18 +5,30 @@ const chalk = require("chalk").default;
 const readline = require("readline");
 const pino = require("pino");
 
+// Perbaikan sleep function
 const sleep = (ms, variation = 0) => new Promise(resolve => {
     setTimeout(resolve, ms + (variation ? Math.floor(Math.random() * variation) : 0));
 });
 
+// Perbaikan question function untuk menghindari bug input
 const question = (text) => {
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    return new Promise(resolve => rl.question(text, ans => {
-        rl.close();
-        resolve(ans);
-    }));
+    return new Promise((resolve) => {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+            terminal: true
+        });
+        
+        // Membersihkan line sebelum menampilkan prompt
+        process.stdout.write('\x1B[K');
+        rl.question(text, (ans) => {
+            rl.close();
+            resolve(ans);
+        });
+    });
 };
 
+// Tetap mempertahankan efek ketik tapi dioptimasi
 const typeEffect = async (text, delay = 20) => {
     for (const char of text) {
         process.stdout.write(char);
@@ -25,6 +37,7 @@ const typeEffect = async (text, delay = 20) => {
     process.stdout.write('\n');
 };
 
+// Banner tetap sama tapi dioptimasi
 const showBanner = async () => {
     console.clear();
     const banner = figlet.textSync("DRAVIN", { font: "ANSI Shadow" });
@@ -36,6 +49,7 @@ const showBanner = async () => {
     await typeEffect(chalk.cyan("═════════════════════════════════════════════════════\n"));
 };
 
+// Koneksi tetap sama
 async function initConnection() {
     const { state } = await useMultiFileAuthState('./dravin_session');
     return makeWASocket({
@@ -54,63 +68,52 @@ async function initConnection() {
     });
 }
 
+// Fungsi utama dengan perbaikan bug input
 async function startSpam() {
     const conn = await initConnection();
     let lastNumber = '';
 
-    while (true) {
+    while (true) { 
+        console.log(chalk.cyan("\n💡 Masukkan nomor target dan jumlah spam"));
+        
+        // Perbaikan prompt nomor
         let nomor = '';
-        if (!lastNumber) {
-            console.log(chalk.cyan("\n💡 Masukkan nomor target dan jumlah spam"));
+        while (!/^62\d{9,13}$/.test(nomor)) {
             nomor = await question(
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                chalk.yellow('Nomor Target 62xxxxxx: ')
+                chalk.yellow('Nomor Target (62xxxxxxxxxx): ')
             );
             
             if (!/^62\d{9,13}$/.test(nomor)) {
+                // Membersihkan line sebelum menampilkan error
+                process.stdout.moveCursor(0, -1);
+                process.stdout.clearLine();
                 console.log(chalk.red("❌ Format nomor tidak valid. Contoh: 6281234567890"));
-                continue;
-            }
-            lastNumber = nomor;
-        } else {
-            const reuse = await question(
-                chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                chalk.yellow(`Gunakan nomor ${lastNumber}? (y/n): `)
-            );
-            
-            if (reuse.toLowerCase() === 'y') {
-                nomor = lastNumber;
-            } else {
-                nomor = await question(
-                    chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-                    chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                    chalk.yellow('Nomor Target 62xxxxxx: ')
-                );
-                
-                if (!/^62\d{9,13}$/.test(nomor)) {
-                    console.log(chalk.red("❌ Format nomor tidak valid. Contoh: 6281234567890"));
-                    continue;
-                }
-                lastNumber = nomor;
             }
         }
+        lastNumber = nomor;
 
-        const jumlah = parseInt(await question(
-            chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-            chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-            chalk.yellow("Jumlah Spam (1-30): ")
-        ));
-        
-        if (isNaN(jumlah) || jumlah < 1 || jumlah > 30) {
-            console.log(chalk.red("❌ Jumlah harus antara 1 dan 30"));
-            continue;
+        // Perbaikan prompt jumlah
+        let jumlah = 0;
+        while (isNaN(jumlah) || jumlah < 1 || jumlah > 30) {
+            const input = await question(
+                chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
+                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
+                chalk.yellow("Jumlah Spam (1-30): ")
+            );
+            
+            jumlah = parseInt(input);
+            if (isNaN(jumlah) || jumlah < 1 || jumlah > 30) {
+                process.stdout.moveCursor(0, -1);
+                process.stdout.clearLine();
+                console.log(chalk.red("❌ Jumlah harus antara 1 dan 30"));
+            }
         }
 
         console.log(chalk.green(`\n🚀 Memulai spam pairing ke ${nomor} sebanyak ${jumlah}x...\n`));
-        let sukses = 0;
         
+        let sukses = 0;
         for (let i = 0; i < jumlah; i++) {
             try {
                 const start = Date.now();
@@ -119,11 +122,16 @@ async function startSpam() {
                 const waktu = ((Date.now() - start) / 1000).toFixed(2);
                 console.log(chalk.green(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`));
                 sukses++;
+                
+                // Tetap mempertahankan delay asli
+                await sleep(5000, 5000);
             } catch (err) {
                 console.log(chalk.red(`[X] ${i + 1}/${jumlah} => Gagal: ${err.message}`));
                 if (err.message.includes("rate limit") || err.message.includes("too many")) {
                     console.log(chalk.yellow("⚠️ Terlalu banyak permintaan, menunggu 45 detik..."));
                     await sleep(45000);
+                } else {
+                    await sleep(10000, 5000);
                 }
             }
         }
@@ -135,10 +143,11 @@ async function startSpam() {
         console.log(chalk.cyan(`└─ Gagal : ${chalk.red(jumlah - sukses)}`));
 
         const ulang = await question(
-                chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                chalk.magenta("🔁 Ingin spam lagi? (y/n): ")
-            );
+            chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
+            chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
+            chalk.magenta("🔁 Ingin spam lagi? (y/n): ")
+        );
+        
         if (ulang.toLowerCase() !== "y") break;
     }
 
