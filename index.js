@@ -29,13 +29,15 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 10, delay = 150)
 };
 
 const animasiGaris = async (total = 53, delay = 20) => {
-    for (let i = 0; i <= total; i++) {
-        const garis = chalk.cyan("═".repeat(i));
-        const kosong = chalk.gray("".repeat(total - i));
-        const baris = garis + kosong;
-        process.stdout.write(`\r${baris}`);
+    const half = Math.floor(total / 2);
+    for (let i = 0; i <= half; i++) {
+        const kiri = chalk.cyan("═".repeat(i));
+        const tengah = chalk.gray("".repeat(total - i * 2));
+        const kanan = chalk.cyan("═".repeat(i));
+        process.stdout.write(`\r${kiri}${tengah}${kanan}`);
         await sleep(delay);
     }
+    process.stdout.write("\n");
 };
 
 const typeEffect = async (text, delay = 20) => {
