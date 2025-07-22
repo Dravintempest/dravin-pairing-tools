@@ -132,12 +132,12 @@ async function startSpam() {
 
         const jumlah = parseInt(await question(
             chalk.cyan('\n ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-            chalk.cyan(' ├──╼') + chalk.yellow("Jumlah Spam (1-30)") + '\n' +
+            chalk.cyan(' ├──╼') + chalk.yellow("Jumlah Spam (1-100)") + '\n' +
             chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
         ));
         
-        if (isNaN(jumlah) || jumlah < 1 || jumlah > 30) {
-            console.log(chalk.red("\n❌ Jumlah harus antara 1 dan 30"));
+        if (isNaN(jumlah) || jumlah < 1 || jumlah > 100) {
+            console.log(chalk.red("\n❌ Jumlah harus antara 1 dan 100"));
             continue;
         }
 
