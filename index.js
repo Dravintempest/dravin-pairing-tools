@@ -29,14 +29,14 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 10, delay = 150)
 };
 
 const animasiGaris = async (total = 53, delay = 50) => {
-    const maxHalf = Math.floor((total - 2) / 2); // -2 buat spasi tengah minimum
+    const mid = Math.floor(total / 2);
 
-    for (let i = 0; i <= maxHalf; i++) {
-        const kiri = chalk.cyan("═".repeat(i + 1));
-        const kanan = chalk.cyan("═".repeat(i + 1));
-        const spasiTengah = " ".repeat(total - ((i + 1) * 2));
+    for (let i = 0; i <= mid; i++) {
+        const kiri = chalk.green("═".repeat(i));
+        const kanan = chalk.green("═".repeat(i));
+        const tengah = chalk.gray(" ".repeat(total - i * 2));
 
-        const baris = kiri + spasiTengah + kanan;
+        const baris = kiri + tengah + kanan;
         process.stdout.write(`\r${baris}`);
         await sleep(delay);
     }
