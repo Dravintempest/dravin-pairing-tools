@@ -4,7 +4,6 @@ const gradient = require("gradient-string");
 const chalk = require("chalk").default;
 const readline = require("readline");
 const pino = require("pino");
-const ora = require("ora");
 
 const sleep = (ms, variation = 0) => new Promise(resolve => {
     setTimeout(resolve, ms + (variation ? Math.floor(Math.random() * variation) : 0));
@@ -52,7 +51,7 @@ const showBanner = async () => {
 };
 
 async function initConnection() {
-    const spinner = ora(chalk.yellow('Initializing connection...')).start();
+    console.log(chalk.yellow('Initializing connection...'));
     try {
         const { state } = await useMultiFileAuthState('./dravin_session');
         const conn = makeWASocket({
@@ -73,10 +72,10 @@ async function initConnection() {
             })
         });
         
-        spinner.succeed(chalk.green('Connection established successfully!'));
+        console.log(chalk.green('Connection established successfully!'));
         return conn;
     } catch (error) {
-        spinner.fail(chalk.red('Connection failed!'));
+        console.log(chalk.red('Connection failed!'));
         console.error(chalk.red('Error details:'), error);
         process.exit(1);
     }
@@ -141,24 +140,22 @@ async function startSpam() {
 
         console.log(chalk.hex('#7FFFD4')(`\n🚀 Starting spam to ${targetNumber} (${spamCount} requests)...\n`));
         
-        const spinner = ora(chalk.yellow('Processing requests...')).start();
+        console.log(chalk.yellow('Processing requests...'));
         const results = [];
         
         for (let i = 0; i < spamCount; i++) {
+            process.stdout.write(chalk.yellow(`Processing... (${i+1}/${spamCount})\r`));
             const result = await requestPairing(conn, targetNumber, i+1);
             results.push(result);
             
             if (!result.success && 
                 (result.error.includes("rate limit") || result.error.includes("too many"))) {
-                spinner.warn(chalk.yellow(`Rate limited, waiting 30 seconds...`));
+                console.log(chalk.yellow(`\n⚠️ Rate limited, waiting 30 seconds...`));
                 await sleep(30000);
             }
-            
-            spinner.text = chalk.yellow(`Processing... (${i+1}/${spamCount})`);
         }
         
-        spinner.stop();
-        
+        console.log('\n');
         console.log(chalk.hex('#00BFFF')("\n📊 Request Results:"));
         results.forEach(result => {
             if (result.success) {
