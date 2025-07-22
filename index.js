@@ -34,7 +34,7 @@ const animasiGaris = async (total = 54, delay = 50) => {
     for (let i = 0; i <= mid; i++) {
         const kiri = chalk.green("═".repeat(i));
         const kanan = chalk.green("═".repeat(i));
-        const tengah = chalk.gray("".repeat(total - i * 2));
+        const tengah = chalk.gray(" ".repeat(total - i * 2));
 
         const baris = kiri + tengah + kanan;
         process.stdout.write(`\r${baris}`);
@@ -68,7 +68,7 @@ const showBanner = async () => {
     await animasiGaris();
     await typeEffect(chalk.green("• Jangan di salah gunakan, tanggung sendiri resikonya"));
     await typeEffect(chalk.yellow("• Target hanya berlaku untuk nomor indo (62)"));
-    await console.log(chalk.cyan("═════════════════════════════════════════════════════\n"));
+    await animasiGaris();
 };
 
 async function initConnection() {
