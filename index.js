@@ -6,7 +6,6 @@ const readline = require("readline");
 const pino = require("pino");
 const ora = require("ora");
 
-// Utility functions
 const sleep = (ms, variation = 0) => new Promise(resolve => {
     setTimeout(resolve, ms + (variation ? Math.floor(Math.random() * variation) : 0));
 });
@@ -35,7 +34,12 @@ const formatCode = (code) => {
     return code.match(/.{1,4}/g).join('-');
 };
 
-// UI Components
+const prompt = (message) => {
+    return chalk.cyan(' ┌─╼') + chalk.hex('#FF1493')('[DRAVIN') + chalk.hex('#FFA500')('⚡') + chalk.hex('#FF1493')('AI]') + '\n' +
+           chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
+           chalk.hex('#ADD8E6')(message);
+};
+
 const showBanner = async () => {
     console.clear();
     const banner = figlet.textSync("DRAVIN-AI", { font: "ANSI Shadow" });
@@ -47,13 +51,6 @@ const showBanner = async () => {
     await typeEffect(chalk.hex('#00FFFF')("══════════════════════════════════════════════════════════\n"));
 };
 
-const prompt = (message) => {
-    return chalk.cyan(' ┌─╼') + chalk.hex('#FF1493')('[DRAVIN') + chalk.hex('#FFA500')('⚡') + chalk.hex('#FF1493')('AI]') + '\n' +
-           chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-           chalk.hex('#ADD8E6')(message);
-};
-
-// Main Functions
 async function initConnection() {
     const spinner = ora(chalk.yellow('Initializing connection...')).start();
     try {
@@ -112,7 +109,6 @@ async function startSpam() {
     let stats = { total: 0, success: 0, failed: 0 };
 
     while (true) {
-        // Get target number
         let targetNumber = '';
         if (lastNumber) {
             const reuse = await question(prompt(`Use previous number ${lastNumber}? (y/n): `));
@@ -130,11 +126,10 @@ async function startSpam() {
             lastNumber = targetNumber;
         }
 
-        // Get spam count
         const countInput = await question(prompt('Enter spam count (1-30): '));
         const spamCount = parseInt(countInput);
         
-        if (isNaN(spamCount) {
+        if (isNaN(spamCount)) {
             console.log(chalk.red("\n⚠️ Please enter a valid number!\n"));
             continue;
         }
@@ -159,13 +154,11 @@ async function startSpam() {
                 await sleep(30000);
             }
             
-            // Update spinner text
             spinner.text = chalk.yellow(`Processing... (${i+1}/${spamCount})`);
         }
         
         spinner.stop();
         
-        // Display results
         console.log(chalk.hex('#00BFFF')("\n📊 Request Results:"));
         results.forEach(result => {
             if (result.success) {
@@ -175,13 +168,11 @@ async function startSpam() {
             }
         });
         
-        // Update stats
         const successCount = results.filter(r => r.success).length;
         stats.total += spamCount;
         stats.success += successCount;
         stats.failed += (spamCount - successCount);
         
-        // Show summary
         console.log(chalk.hex('#9370DB')("\n📈 Session Summary:"));
         console.log(chalk.hex('#98FB98')(`├─ Target: ${chalk.white(targetNumber)}`));
         console.log(chalk.hex('#98FB98')(`├─ Requests: ${chalk.white(spamCount)}`));
@@ -193,11 +184,10 @@ async function startSpam() {
         console.log(chalk.hex('#FFD700')(`├─ Total Success: ${chalk.green(stats.success)}`));
         console.log(chalk.hex('#FFD700')(`└─ Total Failed: ${chalk.red(stats.failed)}`));
 
-        // Ask to continue
         const continueSpam = await question(prompt("\n🔁 Continue spamming? (y/n): "));
         if (continueSpam.toLowerCase() !== 'y') break;
         
-        console.log(); // Add empty line for better separation
+        console.log();
     }
 
     console.log(chalk.hex('#FF69B4')("\n✨ Thank you for using Dravin-AI Tools!"));
@@ -205,7 +195,6 @@ async function startSpam() {
     process.exit(0);
 }
 
-// Main execution
 (async () => {
     await showBanner();
     await sleep(800);
