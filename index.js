@@ -25,7 +25,7 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 15, delay = 150)
         process.stdout.write(`\r${chalk.yellow(`[⌛] ${text}:`)} ${bar}`);
         await sleep(delay);
     }
-    process.stdout.write(chalk.green(" ✔️\n"));
+    process.stdout.write(chalk.green(" ✓\n"));
 };
 
 const animasiGaris = async (total = 54, delay = 50) => {
