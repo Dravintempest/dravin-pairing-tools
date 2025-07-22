@@ -22,7 +22,8 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 15, delay = 150)
         const filled = chalk.green("█".repeat(i));
         const empty = chalk.gray("░".repeat(total - i));
         const bar = filled + empty;
-        process.stdout.write(`\r${chalk.yellow(`[⌛] ${text}`)} ${bar}`);
+        console.log(chalk.yellow(`[⌛] ${text}\n`)); 
+        process.stdout.write(`\r${bar}`);
         await sleep(delay);
     }
     process.stdout.write(chalk.green(" ✔️\n"));
@@ -173,6 +174,6 @@ async function startSpam() {
 (async () => {
     await showBanner();
     await sleep(500);
-    await progressBar("Menyiapkan koneksi", 10, 150);
+    await progressBar("Menyiapkan koneksi", 15, 150);
     await startSpam();
 })();
