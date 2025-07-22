@@ -29,9 +29,9 @@ const showBanner = async () => {
     console.clear();
     const banner = figlet.textSync("DRAVIN", { font: "ANSI Shadow" });
     console.log(gradient.instagram.multiline(banner));
-    await typeEffect(chalk.magenta("[⚙️] WhatsApp Pairing Spam Tools v2 - DRAVIN Edition"));
+    await typeEffect(chalk.magenta("[⚙️] WhatsApp Pairing Spam Tools v2 - BY DRAVIN"));
     await typeEffect(chalk.cyan("═════════════════════════════════════════════════════"));
-    await typeEffect(chalk.green("• Gunakan hanya untuk edukasi, tanggung sendiri risikonya"));
+    await typeEffect(chalk.green("• Jangan di salah gunakan, tanggung sendiri resikonya"));
     await typeEffect(chalk.yellow("• Target hanya berlaku untuk nomor dengan kode negara 62"));
     await typeEffect(chalk.cyan("═════════════════════════════════════════════════════\n"));
 };
@@ -62,9 +62,9 @@ async function startSpam() {
         let nomor = '';
         if (lastNumber) {
             const reuse = await question(
+                chalk.yellow(`💡 Gunakan nomor ${lastNumber}? (y/n): `)
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                chalk.yellow(`Gunakan nomor ${lastNumber}? (y/n): `)
+                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
             );
             
             if (reuse.toLowerCase() === 'y') {
