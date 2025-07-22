@@ -17,12 +17,12 @@ const question = (text) => {
     }));
 };
 
-const progressBar = async (text = "Menyiapkan koneksi", total = 10, delay = 150) => {
+const progressBar = async (text = "Menyiapkan koneksi", total = 15, delay = 150) => {
     for (let i = 0; i <= total; i++) {
         const filled = chalk.green("█".repeat(i));
         const empty = chalk.gray("░".repeat(total - i));
         const bar = filled + empty;
-        process.stdout.write(`\r${chalk.yellow(`[⌛] ${text}:`)} ${bar}`);
+        process.stdout.write(`\r${chalk.yellow(`[⌛] ${text}`)}\n${bar}`);
         await sleep(delay);
     }
     process.stdout.write(chalk.green(" ✔️\n"));
@@ -132,7 +132,8 @@ async function startSpam() {
             continue;
         }
 
-        console.log(chalk.green(`\n🚀 Memulai spam pairing ke ${nomor} sebanyak ${jumlah}x...`));
+        
+        progressBar("Spamming ${nomor} sebanyak ${jumlah}', 10, 150);
         let sukses = 0;
         
         for (let i = 0; i < jumlah; i++) {
