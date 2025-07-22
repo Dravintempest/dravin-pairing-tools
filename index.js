@@ -28,12 +28,12 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 10, delay = 150)
     process.stdout.write(chalk.green(" ✔️\n"));
 };
 
-const animasiGaris = async (text = "Menyiapkan koneksi", total = 53, delay = 150) => {
+const animasiGaris = async (teks = "", total = 53, delay = 150) => {
     for (let i = 0; i <= total; i++) {
-        const filled = chalk.cyan("═".repeat(i));
-        const empty = chalk.gray("".repeat(total - i));
-        const bar = filled + empty;
-        process.stdout.write(`\r${chalk.yellow(`${text}:`)} ${bar}`);
+        const garis = chalk.cyan("═".repeat(i));
+        const kosong = chalk.gray("".repeat(total - i));
+        const baris = garis + kosong;
+        process.stdout.write(`\r${chalk.yellow(`${teks}:`)} ${baris}`);
         await sleep(delay);
     }
 };
