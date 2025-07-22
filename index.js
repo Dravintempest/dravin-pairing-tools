@@ -28,6 +28,16 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 10, delay = 150)
     process.stdout.write(chalk.green(" ✔️\n"));
 };
 
+const animasiGaris = async (text = "Menyiapkan koneksi", total = 53, delay = 150) => {
+    for (let i = 0; i <= total; i++) {
+        const filled = chalk.cyan("═".repeat(i));
+        const empty = chalk.gray("".repeat(total - i));
+        const bar = filled + empty;
+        process.stdout.write(`\r${chalk.yellow(`${text}:`)} ${bar}`);
+        await sleep(delay);
+    }
+};
+
 const typeEffect = async (text, delay = 20) => {
     for (const char of text) {
         process.stdout.write(char);
@@ -49,7 +59,8 @@ const showBanner = async () => {
     const banner = figlet.textSync("DRAVIN", { font: "ANSI Shadow" });
     console.log(gradient.instagram.multiline(banner));
     await textingteks(chalk.magenta("[⚙️] WhatsApp Pairing Spam Tools v2 - BY DRAVIN"));
-    await console.log(chalk.cyan("═════════════════════════════════════════════════════"));
+    await sleep(500);
+    await animasiGaris();
     await typeEffect(chalk.green("• Jangan di salah gunakan, tanggung sendiri resikonya"));
     await typeEffect(chalk.yellow("• Target hanya berlaku untuk nomor indo (62)"));
     await console.log(chalk.cyan("═════════════════════════════════════════════════════\n"));
