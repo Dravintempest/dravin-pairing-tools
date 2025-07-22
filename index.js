@@ -17,6 +17,17 @@ const question = (text) => {
     }));
 };
 
+const progressBar = async (text = "Menyiapkan koneksi", total = 10, delay = 150) => {
+    for (let i = 0; i <= total; i++) {
+        const filled = chalk.green("█".repeat(i));
+        const empty = chalk.gray("░".repeat(total - i));
+        const bar = filled + empty;
+        process.stdout.write(`\r${chalk.yellow(`[⌛] ${text}:`)} ${bar}`);
+        await sleep(delay);
+    }
+    process.stdout.write(chalk.green(" ✔️\n"));
+};
+
 const typeEffect = async (text, delay = 20) => {
     for (const char of text) {
         process.stdout.write(char);
@@ -145,8 +156,7 @@ async function startSpam() {
 
 (async () => {
     await showBanner();
-    await sleep(1000);
-    await typeEffect(chalk.yellow("[⌛] Menyiapkan koneksi..."));
-    await sleep(1500);
+    await sleep(500);
+    await progressBar("Menyiapkan koneksi", 10, 150);
     await startSpam();
 })();
