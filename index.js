@@ -28,15 +28,19 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 10, delay = 150)
     process.stdout.write(chalk.green(" ✔️\n"));
 };
 
-const animasiGaris = async (total = 53, delay = 20) => {
-    const half = Math.floor(total / 2);
-    for (let i = 0; i <= half; i++) {
-        const kiri = chalk.cyan("═".repeat(i));
-        const tengah = chalk.gray("".repeat(total - i * 2));
-        const kanan = chalk.cyan("═".repeat(i));
-        process.stdout.write(`\r${kiri}${tengah}${kanan}`);
+const animasiGaris = async (total = 53, delay = 50) => {
+    const maxHalf = Math.floor((total - 2) / 2); // -2 buat spasi tengah minimum
+
+    for (let i = 0; i <= maxHalf; i++) {
+        const kiri = chalk.cyan("═".repeat(i + 1));
+        const kanan = chalk.cyan("═".repeat(i + 1));
+        const spasiTengah = " ".repeat(total - ((i + 1) * 2));
+
+        const baris = kiri + spasiTengah + kanan;
+        process.stdout.write(`\r${baris}`);
         await sleep(delay);
     }
+
     process.stdout.write("\n");
 };
 
