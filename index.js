@@ -22,7 +22,8 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 15, delay = 150)
         const filled = chalk.green("█".repeat(i));
         const empty = chalk.gray("░".repeat(total - i));
         const bar = filled + empty;
-        process.stdout.write(`\r${chalk.yellow(`[⌛] ${text}`)}\n${bar}`);
+        process.stdout.write(`\r${chalk.yellow(`[⌛] ${text}`)}`);
+        process.stdout.write(`\n\r${bar}`);
         await sleep(delay);
     }
     process.stdout.write(chalk.green(" ✔️\n"));
