@@ -25,15 +25,23 @@ const typeEffect = async (text, delay = 20) => {
     process.stdout.write('\n');
 };
 
+const textingteks = async (text, delay = 10) => {
+    for (const char of text) {
+        process.stdout.write(char);
+        await sleep(delay);
+    }
+    process.stdout.write('\n');
+};
+
 const showBanner = async () => {
     console.clear();
     const banner = figlet.textSync("DRAVIN", { font: "ANSI Shadow" });
     console.log(gradient.instagram.multiline(banner));
-    await typeEffect(chalk.magenta("[⚙️] WhatsApp Pairing Spam Tools v2 - BY DRAVIN"));
-    await typeEffect(chalk.cyan("═════════════════════════════════════════════════════"));
+    await textingteks(chalk.magenta("[⚙️] WhatsApp Pairing Spam Tools v2 - BY DRAVIN"));
+    await console.log(chalk.cyan("═════════════════════════════════════════════════════"));
     await typeEffect(chalk.green("• Jangan di salah gunakan, tanggung sendiri resikonya"));
-    await typeEffect(chalk.yellow("• Target hanya berlaku untuk nomor dengan kode negara 62"));
-    await typeEffect(chalk.cyan("═════════════════════════════════════════════════════\n"));
+    await typeEffect(chalk.yellow("• Target hanya berlaku untuk nomor indo (62)"));
+    await console.log(chalk.cyan("═════════════════════════════════════════════════════\n"));
 };
 
 async function initConnection() {
