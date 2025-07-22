@@ -62,7 +62,7 @@ async function startSpam() {
         let nomor = '';
         if (lastNumber) {
             const reuse = await question(
-                chalk.yellow(`💡 Gunakan nomor ${lastNumber}? (y/n): `)
+                chalk.yellow(`💡 Gunakan nomor ${lastNumber}? (y/n): `) + '\n' +
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
             );
