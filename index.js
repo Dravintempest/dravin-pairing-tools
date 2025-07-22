@@ -34,7 +34,7 @@ const animasiGaris = async (total = 53, delay = 50) => {
     for (let i = 0; i <= mid; i++) {
         const kiri = chalk.green("═".repeat(i));
         const kanan = chalk.green("═".repeat(i));
-        const tengah = chalk.gray(" ".repeat(total - i * 2));
+        const tengah = chalk.gray("".repeat(total - i * 2));
 
         const baris = kiri + tengah + kanan;
         process.stdout.write(`\r${baris}`);
