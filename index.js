@@ -62,9 +62,8 @@ async function startSpam() {
         let nomor = '';
         if (lastNumber) {
             const reuse = await question(
-                chalk.yellow(`\n💡 Gunakan nomor ${lastNumber}? (y/n): `) + '\n' +
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-                chalk.cyan(' └──╼') + chalk.yellow('Nomor Target 62xxxxxx: ') + '\n' +
+                chalk.cyan(' ├──╼') + chalk.yellow('Nomor Target 62xxxxxx') + '\n' +
                 chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
             );
             
@@ -76,8 +75,8 @@ async function startSpam() {
         if (!nomor) {
             nomor = await question(
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                chalk.yellow('Nomor Target 62xxxxxx: ')
+                chalk.cyan(' ├──╼') + chalk.yellow('Nomor Target 62xxxxxx') + '\n' +
+                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
             );
             
             if (!/^62\d{9,13}$/.test(nomor)) {
@@ -89,8 +88,8 @@ async function startSpam() {
 
         const jumlah = parseInt(await question(
             chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
-            chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-            chalk.yellow("Jumlah Spam (1-30): ")
+            chalk.yellow("├──╼Jumlah Spam (1-30)") + '\n' +
+            chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
         ));
         
         if (isNaN(jumlah) || jumlah < 1 || jumlah > 30) {
@@ -127,9 +126,7 @@ async function startSpam() {
         const ulang = await question(
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + ' ' +
-                chalk.magenta("🔁 Ingin spam lagi? (y/n): ")
-            );
-        if (ulang.toLowerCase() !== "y") break;
+    e() !== "y") break;
     }
 
     console.log(chalk.green("\n✨ Terima kasih telah menggunakan Dravin Tools!"));
