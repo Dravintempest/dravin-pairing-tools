@@ -147,7 +147,7 @@ async function startSpam() {
         for (let i = 0; i < jumlah; i++) {
             try {
                 const start = Date.now();
-                let kode = await conn.requestPairingCode(nomor(), "DRAVINNN");
+                let kode = await conn.requestPairingCode(nomor);
                 kode = kode.match(/.{1,4}/g).join('-');
                 const waktu = ((Date.now() - start) / 1000).toFixed(2);
                 console.log(chalk.green(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`));
