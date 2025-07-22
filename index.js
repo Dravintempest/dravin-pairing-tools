@@ -64,7 +64,7 @@ async function startSpam() {
             const reuse = await question(
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' ├──╼') + chalk.yellow('Nomor Target 62xxxxxx') + '\n' +
-                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
+                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ') + '\n'
             );
             
             if (reuse.toLowerCase() === 'y') {
@@ -76,7 +76,7 @@ async function startSpam() {
             nomor = await question(
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' ├──╼') + chalk.yellow('Nomor Target 62xxxxxx') + '\n' +
-                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
+                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ') + '\n'
             );
             
             if (!/^62\d{9,13}$/.test(nomor)) {
@@ -89,11 +89,11 @@ async function startSpam() {
         const jumlah = parseInt(await question(
             chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
             chalk.cyan(' ├──╼') + chalk.yellow("Jumlah Spam (1-30)") + '\n' +
-            chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
+            chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ') + '\n'
         ));
         
         if (isNaN(jumlah) || jumlah < 1 || jumlah > 30) {
-            console.log(chalk.red("❌ Jumlah harus antara 1 dan 30"));
+            console.log(chalk.red("❌ Jumlah harus antara 1 dan 30") + '\n');
             continue;
         }
 
@@ -106,12 +106,12 @@ async function startSpam() {
                 let kode = await conn.requestPairingCode(nomor);
                 kode = kode.match(/.{1,4}/g).join('-');
                 const waktu = ((Date.now() - start) / 1000).toFixed(2);
-                console.log(chalk.green(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`));
+                console.log(chalk.green(`[✓] ${i + 1}/${jumlah} => Kode: ${chalk.yellow(kode)} (${waktu}s)`) + '\n');
                 sukses++;
             } catch (err) {
                 console.log(chalk.red(`[X] ${i + 1}/${jumlah} => Gagal: ${err.message}`));
                 if (err.message.includes("rate limit") || err.message.includes("too many")) {
-                    console.log(chalk.yellow("⚠️ Terlalu banyak permintaan, menunggu 45 detik..."));
+                    console.log(chalk.yellow("⚠️ Terlalu banyak permintaan, menunggu 45 detik...") + '\n');
                     await sleep(45000);
                 }
             }
@@ -121,12 +121,12 @@ async function startSpam() {
         console.log(chalk.cyan(`├─ Nomor : ${chalk.white(nomor)}`));
         console.log(chalk.cyan(`├─ Total : ${chalk.white(jumlah)}`));
         console.log(chalk.cyan(`├─ Sukses : ${chalk.green(sukses)}`));
-        console.log(chalk.cyan(`└─ Gagal : ${chalk.red(jumlah - sukses)}`));
+        console.log(chalk.cyan(`└─ Gagal : ${chalk.red(jumlah - sukses)}`) + '\n' );
 
         const ulang = await question(
                 chalk.cyan(' ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' ├──╼') + chalk.magenta("🔁 Ingin spam lagi? (y/n)") + '\n' +
-                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯')
+                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯') + '\n'
             );
     if (ulang.toLowerCase() !== "y") break;
     }
