@@ -28,7 +28,7 @@ const progressBar = async (text = "Menyiapkan koneksi", total = 10, delay = 150)
     process.stdout.write(chalk.green(" ✔️\n"));
 };
 
-const animasiGaris = async (total = 53, delay = 50) => {
+const animasiGaris = async (total = 54, delay = 50) => {
     const mid = Math.floor(total / 2);
 
     for (let i = 0; i <= mid; i++) {
