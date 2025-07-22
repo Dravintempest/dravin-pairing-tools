@@ -132,8 +132,7 @@ async function startSpam() {
             continue;
         }
 
-        
-        progressBar("Spamming ${nomor} sebanyak ${jumlah}', 10, 150);
+        console.log(chalk.green(`\n🚀 Memulai spam pairing ke ${nomor} sebanyak ${jumlah}x...\n`));
         let sukses = 0;
         
         for (let i = 0; i < jumlah; i++) {
@@ -162,7 +161,7 @@ async function startSpam() {
         const ulang = await question(
                 chalk.cyan('\n ┌─╼') + chalk.red('[DRAVIN') + chalk.hex('#FFA500')('〄') + chalk.red('TOOLS]') + '\n' +
                 chalk.cyan(' ├──╼') + chalk.magenta("🔁 Ingin spam lagi? (y/n)") + '\n' +
-                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯')
+                chalk.cyan(' └────╼') + ' ' + chalk.red('❯') + chalk.hex('#FFA500')('❯') + chalk.blue('❯ ')
             );
     if (ulang.toLowerCase() !== "y") break;
     }
