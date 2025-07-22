@@ -9,9 +9,17 @@ const sleep = (ms, variation = 0) => new Promise(resolve => {
     setTimeout(resolve, ms + (variation ? Math.floor(Math.random() * variation) : 0));
 });
 
+const EXIT_WORDS = ["exit", "keluar", "quit", "q"]; // bebas tambah
+
 const question = (text) => {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
     return new Promise(resolve => rl.question(text, ans => {
+        const val = ans.trim().toLowerCase();
+        if (EXIT_WORDS.includes(val)) {
+            console.log(chalk.red("\n[!] Keluar dari tools..."));
+            rl.close();
+            process.exit(0);
+        }
         rl.close();
         resolve(ans);
     }));
@@ -68,6 +76,7 @@ const showBanner = async () => {
     await animasiGaris();
     await typeEffect(chalk.green("• Jangan di salah gunakan, tanggung sendiri resikonya"));
     await typeEffect(chalk.yellow("• Target hanya berlaku untuk nomor indo (62)"));
+    await typeEffect(chalk.yellow("💡 Tips ketik exit/quit/keluar/q untuk keluar dari tools"));
     await animasiGaris();
 };
 
