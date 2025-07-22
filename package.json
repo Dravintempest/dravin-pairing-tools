@@ -11,8 +11,7 @@
     "chalk": "^5.3.0",
     "figlet": "^1.7.0",
     "gradient-string": "^2.0.1",
-    "pino": "^8.17.0",
-    "ora": "^7.1.0"
+    "pino": "^8.17.0"
   },
   "author": "Dravin",
   "license": "MIT"
